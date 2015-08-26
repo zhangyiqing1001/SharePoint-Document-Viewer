@@ -199,3 +199,10 @@ Using PowerShell
      disable-spfeature accusoft.pcc -url $siteurl
      uninstall-spsolution accusoft.pcc.wsp -webapplication $siteurl
      remove-spsolution accusoft.pcc.wsp
+
+Support
+=======
+
+Learn more about [Prizm Content Connect for SharePoint here](https://www.accusoft.com/products/prizm-content-connect-sharepoint/overview/).
+
+If you have questions, please visit our online [help center](https://accusofthelp.zendesk.com/hc/en-us).
