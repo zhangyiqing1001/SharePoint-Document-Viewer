@@ -159,7 +159,7 @@ To add custom viewer permissions and interactive-preview support for all support
 **Notes:**
 
 -   If the solution was previously installed and removed while this feature was Active, in order to re-add custom permissions, you will need to go to Site Settings \> Site Collection Features, and Deactivate this feature, and then select Activate.
--   The SharePoint solution must be removed before the script can be run again. See [Removing the PCC for SharePoint Solution](Removing%20the%20PCC%20for%20SharePoint%20Solution.html).
+-   The SharePoint solution must be removed before the script can be run again. See Removing the PCC for SharePoint Solution below.
 
 To update SharePoint WOPI bindings to PCC WOPI Client
 -----------------------------------------------------
