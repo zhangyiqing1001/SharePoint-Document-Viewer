@@ -36,8 +36,6 @@ Server Dependencies
     -   [Getting Started with ACS](http://help.accusoft.com/SAAS/pcc-for-acs/webframe.html#Getting%20Started.html)
 -   (Optional) Microsoft Office Web Apps
 
-See [Product Architecture Overview](Product%20Architecture%20Overview.html).
-
 Supported Operating Systems
 ---------------------------
 
