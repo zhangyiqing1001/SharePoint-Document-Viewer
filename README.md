@@ -194,7 +194,7 @@ Using PowerShell
 
 **Note:** Installation or removal of PCC for SharePoint using PowerShell requires that the User is a farm administrator, and is an administrator on the local machine.
 
-     $siteurl = \<set site name here\>
-     disable-spfeature accusoft.pcc -url \$siteurl
-     uninstall-spsolution accusoft.pcc.wsp -webapplication \$siteurl
+     $siteurl = <set site name here>
+     disable-spfeature accusoft.pcc -url $siteurl
+     uninstall-spsolution accusoft.pcc.wsp -webapplication $siteurl
      remove-spsolution accusoft.pcc.wsp
