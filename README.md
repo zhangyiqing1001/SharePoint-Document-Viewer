@@ -51,15 +51,8 @@ System Requirements
 -   250MB of free disk space for product installation and logging
 -   Internet Information Services (IIS)
 -   Microsoft .NET Framework 4.5
--   Service Account (for PCC-WOPI web application)
-
-    PCC-WOPI application pool is configured to run as this account. This account requires permission to read and write to SharePoint lists.
-
-    In **Central Administration \> Manage web applications**, select your web application (e.g., **SharePoint - 80**) and select **User Policy**. If the service account is not in the list with **Full Control**, do the following:
-
-    1.  Select **Add Users**
-    2.  Leave **Zones = (All zones)** and select **Next**
-    3.  Add service account name, grant **Full Control** and select **Finish**
+-   Service Account - Administrator type (for PCC-WOPI web application), for example "WOPISVC"; PCC-WOPI application pool is configured to run as this account. This account requires permission to read and write to SharePoint lists.
+-   Add "::1 prizm" to Windows hosts file
 
 Required Permissions
 --------------------
@@ -147,6 +140,14 @@ Note the following pages served by the PCC-WOPI site:
 
 Setting up PCC for SharePoint
 =============================
+
+If you haven't already done so, create or designate an existing SharePoint Service Account, Administrator type, to use for PCC-WOPI web application, for example "WOPISVC". PCC-WOPI application pool is configured to run as this account. This account requires permission to read and write to SharePoint lists.
+
+In **Central Administration \> Manage web applications**, select your web application (e.g., **SharePoint - 80**) and select **User Policy**. If the service account is not in the list with **Full Control**, do the following:
+
+1.  Select **Add Users**
+2.  Leave **Zones = (All zones)** and select **Next**
+3.  Add service account name, grant **Full Control** and select **Finish**
 
 **Note:** Installation of PCC for SharePoint using PowerShell requires that the User is a farm administrator, and is an administrator on the local machine.
 
