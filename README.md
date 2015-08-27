@@ -1,4 +1,31 @@
-# SharePoint Document Viewer
+Document Viewer for SharePoint Overview
+=======================================
+
+Our responsive HTML5 document viewer easily integrates into your SharePoint 2013 application allowing you to display all major file formats right within the browser — no downloading required. The SharePoint document viewer can be used with either our on-premise Prizm Content Connect document viewer platform or our hosted Accusoft Cloud Services SaaS document viewer solution.
+
+The SharePoint document viewer provides a wide array of document viewing and management tools that include:
+
+-   Advanced Search
+    -   Full text search
+    -   Case-sensitive search
+    -   Match exact word or phrase
+    -   Wildcard searches
+-   Redactions
+    -   Remove sensitive data securely from documents
+    -   Auto redact keywords or phrases
+-   E-Sign
+    -   Electronic signature tools that allow you to digitally sign a document directly in the browser
+    -   The signature is a vector-based and securely burned into the document like a redaction
+-   Document Viewing Tools
+    -   Zoom and Magnify
+    -   Thumbnails
+    -   Rotate pages or entire document
+    -   Full screen viewing
+    -   Mobile document viewing
+
+The SharePoint document viewer supports Microsoft Office documents (Word, Excel, and PowerPoint), PDF, CAD EML, PNG, JPG, JPEG, GIF, TIF and all other major file formats.
+
+Enhance your SharePoint document workflow by integrating our advanced search within documents such as customer contracts and purchase orders. Redact sensitive information from documents. Sign documents right in the web browser to streamline your workflow.
 
 Upgrading from Previous Versions
 ================================
