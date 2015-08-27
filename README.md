@@ -49,8 +49,6 @@ System Requirements
 -   250MB of free disk space for product installation and logging
 -   Internet Information Services (IIS)
 -   Microsoft .NET Framework 4.5
--   Service Account - Administrator type (for PCC-WOPI web application), for example "WOPISVC"; PCC-WOPI application pool is configured to run as this account. This account requires permission to read and write to SharePoint lists.
--   Add "::1 prizm" to Windows hosts file
 
 Required Permissions
 --------------------
@@ -69,7 +67,7 @@ PCC WOPI Client is an IIS web application. There are two prerequisites needed fo
 
 -   Host Name
 
-    The web application is installed and addressed by a unique host name. This is typically a DNS host name associated with the IP address of the server hosting PCC WOPI Client, e.g., pccsp.contoso.com. For evaluation purposes, a host name can be added to your Windows hosts file. Open C:\\Windows\\System32\\Drivers\\etc\\hosts and add "127.0.0.1 pccsp", optionally replacing the IP address or host name with your own.
+    The web application is installed and addressed by a unique host name. This is typically a DNS host name associated with the IP address of the server hosting PCC WOPI Client, e.g., pccsp.contoso.com. For evaluation purposes, a host name can be added to your Windows hosts file, for example, add "::1 pccsp" to C:\Windows\System32\Drivers\etc\hosts.
 
 -   Service Account
 
@@ -93,7 +91,7 @@ The install adds an entry to **Programs and Features** with the current version 
 
 In the **pcc.config** file (**c:\\programdata\\accusoft\\prizm\\PCC-WOPI\\viewer-webtier\\pcc.config)**, you configure the following:
 
--   Whether you're integrating with Accusoft Cloud Services SaaS viewer, or with the on-premise Prizm Content Connect viewer
+-   Whether you're integrating with Accusoft Cloud Services, or with on-premise Prizm Content Connect
 -   Whether you're integrating with Office Web Apps
 -   Whether you're deploying over https
 -   Which file types you want to view with the ACS or PCC viewer
