@@ -142,6 +142,7 @@ If you're integrating with Office Web Apps, specify the following:
 
 1.  **owas-host-name** (to support **/hosting/discovery**)
 2.  **owas account-name** and **password** with read access to **C:\\ProgramData\\Microsoft\\OfficeWebApps\\Data\\FarmState\\proofKey.txt**
+3.  The PCC-WOPI application pool identity must be added as a local Administrator to the Office Web Apps server.
 
 ### Deploying over https
 
@@ -218,10 +219,17 @@ Using PowerShell
 
 **Note:** Installation or removal of PCC for SharePoint using PowerShell requires that the User is a farm administrator, and is an administrator on the local machine.
 
-     $siteurl = <set site name here>
      disable-spfeature accusoft.pcc -url $siteurl
      uninstall-spsolution accusoft.pcc.wsp -webapplication $siteurl
      remove-spsolution accusoft.pcc.wsp
+
+Known Issues
+============
+PCC for SharePoint 2013 v2.0 has the following known issue:
+-   **PCCSP-1132**: Download original document is missing extension.
+ When downloading a document "as original document" in the viewer, the downloaded file does not have an extension.
+-   **PCCSP-1143**: OWA integration requires adding PCC-WOPI identity as local administrator to OWA server. 
+The Office Web Apps account and password specified in **pcc.config** must be populated, in order to sync keys, but the account isn't actually used. The PCC-WOPI identity is used instead, and must be a local Administrator on the OWA server.
 
 Support
 =======
