@@ -80,12 +80,28 @@ System Requirements
 Required Permissions
 --------------------
 
-Users who install, configure, and manage the PCC for SharePoint product will need different permissions to perform various actions.
+Users who install, configure, manage, and use the PCC for SharePoint product will need different permissions to perform various actions.
+
+### Installing with PowerShell
 
 Installation of PCC for SharePoint using PowerShell requires the following:
 
 -   User is a farm administrator
 -   User is an administrator on the local machine
+
+### Removing System Account Limitations
+
+If the upper right of the window shows that the current user is "System Account", it is because the current "Account operates as System".
+
+SharePoint does not support Preview or View in Browser as the System Account. This applies to both Office Web Apps and PCC WOPI Client.
+
+To remove this setting from an account:
+
+1.  In Central Administration, go to Security > Specify web application user policy
+
+2.  Select the account and "Edit Permissions of Selected Users"
+
+3.  Uncheck "Account operates as System"
 
 Setting up PCC WOPI Client
 ==========================
@@ -178,7 +194,8 @@ In **Central Administration \> Manage web applications**, select your web applic
 To add custom viewer permissions and interactive-preview support for all supported file types:
 ----------------------------------------------------------------------------------------------
 
-1.  In Windows Explorer, right-click **Install-PCCSPSolution.ps1** and select **Run with PowerShell**
+1.  In Windows Services, verify "SharePoint Administration" is started
+2.  In Windows Explorer, right-click **Install-PCCSPSolution.ps1** and select **Run with PowerShell**
 2.  Enter the site collection URL (e.g., http://sharepoint)
 3.  The solution is deployed, and the site collection feature "Accusoft Prizm Content Connect for SharePoint" is Activated
 
