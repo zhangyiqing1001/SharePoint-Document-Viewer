@@ -30,7 +30,7 @@ Enhance your SharePoint document workflow by integrating our advanced search wit
 Upgrading from Previous Versions
 ================================
 
-Prizm Content Connect for SharePoint 2013 v2.0 is a completely new architecture, based on capabilities introduced in SharePoint 2013. To remove a previous installation of PCC for SharePoint prior to installing the new version, do the following:
+Prizm Content Connect for SharePoint 2013 v2.x is a completely new architecture, based on capabilities introduced in SharePoint 2013. If you are upgrading from a PCC for SharePoint version prior to v2.0, remove the previous installation of PCC for SharePoint prior to installing the new version, as follows:
 
 1.  Remove all references to "Prizm Preview Field".
     1.  For a document library, select **Library Settings** on the **Library** tab.
@@ -49,6 +49,8 @@ Prizm Content Connect for SharePoint 2013 v2.0 is a completely new architecture,
 
 Please contact Accusoft's Sales Department using <sales@accusoft.com> for assistance with upgrading.
 
+**Note:** If you are upgrading from v2.0 to a later version of v2.x, please see the instructions in "Release Notes for v2.1" below.
+
 Dependencies & Requirements
 ===========================
 
@@ -60,6 +62,8 @@ Server Dependencies
 -   SharePoint 2013 Server Standard or Enterprise Edition
 -   Accusoft Prizm Content Connect (PCC) 10.x or Accusoft Cloud Services (ACS) Viewer
     -   [Getting Started with PCC](http://help.accusoft.com/PCC/v10.2/HTML/webframe.html#Getting%20Started%20with%20PCC.html)
+    
+        **Note:** PCC for SharePoint processes requests from the PCC for SharePoint web tier only; requests from other PCC web tiers will return an error. As such, we recommend that when you install PCC, that you deselect the option to install the client samples, as they will not work.
     -   [Getting Started with ACS](http://help.accusoft.com/SAAS/pcc-for-acs/webframe.html#Getting%20Started.html)
 -   (Optional) Microsoft Office Web Apps
 
@@ -80,7 +84,7 @@ System Requirements
 Required Permissions
 --------------------
 
-Users who install, configure, manage, and use the PCC for SharePoint product will need different permissions to perform various actions.
+Users who install, configure, and manage the PCC for SharePoint product will need different permissions to perform various actions.
 
 ### Installing with PowerShell
 
@@ -98,9 +102,7 @@ SharePoint does not support Preview or View in Browser as the System Account. Th
 To remove this setting from an account:
 
 1.  In Central Administration, go to Security > Specify web application user policy
-
 2.  Select the account and "Edit Permissions of Selected Users"
-
 3.  Uncheck "Account operates as System"
 
 Setting up PCC WOPI Client
@@ -110,7 +112,7 @@ PCC WOPI Client is an IIS web application. There are two prerequisites needed fo
 
 -   Host Name
 
-    The web application is installed and addressed by a unique host name. This is typically a DNS host name associated with the IP address of the server hosting PCC WOPI Client, e.g., pccsp.contoso.com. For evaluation purposes, a host name can be added to your Windows hosts file, for example, add "::1 pccsp" to C:\Windows\System32\Drivers\etc\hosts.
+    The web application is installed and addressed by a unique host name. This is typically a DNS host name associated with the IP address of the server hosting PCC WOPI Client, e.g., pccsp.contoso.com. For evaluation purposes, a host name can be added to your Windows hosts file. For example, in **C:\Windows\System32\Drivers\etc\hosts**, add **127.0.0.1 pccsp** for TCP/IPv4, or **::1 pccsp** for TCP/IPv6.
 
 -   Service Account
 
@@ -121,10 +123,15 @@ Once you have met the prerequisites above in addition to the Dependencies & Requ
 1. Install the PCC WOPI Client
 ------------------------------
 
-**Note:** If you have already installed **PccWopiClient-2.0.msi**, you must uninstall it before re-installing it.
+**Notes:** 
 
-1.  Copy **PccWopiClient-2.0.msi** to PCC WOPI Client server
-2.  Run **PccWopiClient-2.0.msi**
+   -  If you have already installed **PccWopiClient-2.1.msi**, you must uninstall it before re-installing it.
+   -  OWA and PCC WOPI Client must both be on the same port (80 or 443) (http or https) because there's only 1 WOPI zone.
+
+To install the PCC WOPI Client:
+
+1.  Copy **PccWopiClient-2.1.msi** to PCC WOPI Client server
+2.  Run **PccWopiClient-2.1.msi**
 3.  Enter IIS host name and service account for the PCC-WOPI IIS site
 
 The install adds an entry to **Programs and Features** with the current version and build number.
@@ -134,7 +141,7 @@ The install adds an entry to **Programs and Features** with the current version 
 
 In the **pcc.config** file (**c:\\programdata\\accusoft\\prizm\\PCC-WOPI\\viewer-webtier\\pcc.config)**, you configure the following:
 
--   Whether you're integrating with Accusoft Cloud Services, or with on-premise Prizm Content Connect
+-   Whether you're integrating with Accusoft Cloud Services, or with on-premise Prizm Content Connect 
 -   Whether you're integrating with Office Web Apps
 -   Whether you're deploying over https
 -   Which file types you want to view with the ACS or PCC viewer
@@ -156,11 +163,12 @@ In the **pcc.config** file (**c:\\programdata\\accusoft\\prizm\\PCC-WOPI\\viewer
 
 If you're integrating with Office Web Apps, specify the following:
 
-1.  **owas-host-name** (to support **/hosting/discovery**)
-2.  **owas account-name** and **password** with read access to **C:\\ProgramData\\Microsoft\\OfficeWebApps\\Data\\FarmState\\proofKey.txt**
-3.  The PCC-WOPI application pool identity must be added as a local Administrator to the Office Web Apps server.
+1.  **owas-host-name** (to support **/hosting/discovery**) e.g., owas or owas.my-domain.com
+2.  The PCC-WOPI application pool identity must be added as a local Administrator to the Office Web Apps server.
 
 ### Deploying over https
+
+A SharePoint farm is configured to navigate the browser to a WOPI application over http or https. Therefore, Office Web Apps and PCC WOPI Client must be deployed on the same port (either port 80 or 443).
 
 Change **wopi-net-zone** to **internal-https** if deploying over https.
 
@@ -169,7 +177,7 @@ Change **wopi-net-zone** to **internal-https** if deploying over https.
 -   Add or remove/comment **\<extension\>** elements to customize the file types to be viewed/previewed with ACS or PCC viewer.
 -   If an extension is to be viewed, but not previewed, add attribute **interactive-preview="false"** to **\<extension\>** element.
 
-**Note:** Any time you make changes to **pcc.config**, you need to then update the WOPI bindings by running **Update-PCCWOPIBindings.ps1** (see Setting up PCC for SharePoint for instructions).
+**Note:** Any time you make changes to **pcc.config**, you need to then update the WOPI bindings by running **Update-PCCWOPIBindings.ps1** (see "Setting up PCC for SharePoint" for instructions).
 
 Note the following pages served by the PCC-WOPI site:
 
@@ -181,33 +189,35 @@ Note the following pages served by the PCC-WOPI site:
 Setting up PCC for SharePoint
 =============================
 
-If you haven't already done so, create or designate an existing SharePoint Service Account, Administrator type, to use for PCC-WOPI web application, for example "WOPISVC". PCC-WOPI application pool is configured to run as this account. This account requires permission to read and write to SharePoint lists.
+If you haven't already done so, create or designate an existing SharePoint Service Account, Administrator type, to use for PCC-WOPI web application, for
+example "WOPISVC". PCC-WOPI application pool is configured to run as this account. This account requires permission to read and write to SharePoint lists.
 
 In **Central Administration \> Manage web applications**, select your web application (e.g., **SharePoint - 80**) and select **User Policy**. If the service account is not in the list with **Full Control**, do the following:
 
 1.  Select **Add Users**
 2.  Leave **Zones = (All zones)** and select **Next**
 3.  Add service account name, grant **Full Control** and select **Finish**
+4.  Verify that "Account operates as System" is NOT checked. Please refer to "Removing 'System Account' Limitations" under the "Dependencies & Requirements" section, above.
+	
+**Notes:** 
 
-**Note:** Installation of PCC for SharePoint using PowerShell requires that the User is a farm administrator, and is an administrator on the local machine.
+-  Installation of PCC for SharePoint using PowerShell requires that the User is a farm administrator, and is an administrator on the local machine.
+-  If executing the installation script from within the SharePoint 2013 Management Shell, you must launch the shell using **Run as Administrator**.
 
 To add custom viewer permissions and interactive-preview support for all supported file types:
 ----------------------------------------------------------------------------------------------
 
 1.  In Windows Services, verify "SharePoint Administration" is started
 2.  In Windows Explorer, right-click **Install-PCCSPSolution.ps1** and select **Run with PowerShell**
-2.  Enter the site collection URL (e.g., http://sharepoint)
-3.  The solution is deployed, and the site collection feature "Accusoft Prizm Content Connect for SharePoint" is Activated
+3.  Enter the site collection URL (e.g., http://sharepoint)
+4.  The solution is deployed, and the site collection feature "Accusoft Prizm Content Connect for SharePoint" is Activated
 
-**Notes:**
-
--   If the solution was previously installed and removed while this feature was Active, in order to re-add custom permissions, you will need to go to Site Settings \> Site Collection Features, and Deactivate this feature, and then select Activate.
--   The SharePoint solution must be removed before the script can be run again. See "Removing the PCC for SharePoint Solution" below.
+**Note:** The SharePoint solution must be removed before the script can be run again. See "Removing the PCC for SharePoint Solution" below.
 
 To update SharePoint WOPI bindings to PCC WOPI Client
 -----------------------------------------------------
 
-1.  In Windows Explorer, right-click **Update-PCCWOPIBinding.ps** and select **Run with PowerShell**
+1.  In Windows Explorer, right-click **Update-PCCWOPIBinding.ps1** and select **Run with PowerShell**
 
     **Note:** If connecting over https, first modify script to remove **-AllowHTTP**
 
@@ -231,26 +241,60 @@ Using the SharePoint Interface
 
 **Troubleshooting Tip:** If SharePoint indicates that you don’t have permission to remove the solution, turn off UAC via registry by changing the DWORD **EnableLUA** from **1** to **0** in **HKEY\_LOCAL\_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\policies\\system**. You will get a notification that a reboot is required. After the reboot, UAC is disabled.
 
+Removing SharePoint WOPI bindings to PCC WOPI Client
+----------------------------------------------------
+
+1.  In Windows Explorer, right-click **Remove-PCCWOPIBinding.ps1** and select **Run with PowerShell**
+
 Using PowerShell
 ----------------
 
 **Note:** Installation or removal of PCC for SharePoint using PowerShell requires that the User is a farm administrator, and is an administrator on the local machine.
 
-     disable-spfeature accusoft.pcc -url $siteurl
-     uninstall-spsolution accusoft.pcc.wsp -webapplication $siteurl
-     remove-spsolution accusoft.pcc.wsp
+      disable-spfeature accusoft.pcc -url \$siteurl
+      uninstall-spsolution accusoft.pcc.wsp -webapplication \$siteurl
+      remove-spsolution accusoft.pcc.wsp
+      get-spwopibinding -application pcc | remove-spwopibinding -confirm:$false
+ 
+Release Notes for v2.1
+======================
 
-Known Issues
-============
-PCC for SharePoint 2013 v2.0 has the following known issue:
--   **PCCSP-1132**: Download original document is missing extension.
- When downloading a document "as original document" in the viewer, the downloaded file does not have an extension.
--   **PCCSP-1143**: OWA integration requires adding PCC-WOPI identity as local administrator to OWA server. 
-The Office Web Apps account and password specified in **pcc.config** must be populated, in order to sync keys, but the account isn't actually used. The PCC-WOPI identity is used instead, and must be a local Administrator on the OWA server.
+PCC for SharePoint v2.1 addresses the following issues and includes improvements to permissions, licensing, and installation:
+
+Issues Resolved
+---------------
+
+-  "Download original document" is missing extension.
+-  **predefinedSearch** terms don't appear in the viewer.
+-  **pcc.config** requires OWAS account name and password, but are not used.
+-  View/Preview fails without access to googleapis.com.
+-  Install script exits with **Deployed = False** (when it's actually **True**).
+-  Install script's "Enabling Feature" loops indefinitely when install fails.
+-  Install script throws error if solution already exists.
+-  Install "Repair" option doesn't restore missing files.
+
+Features Added
+--------------
+
+-  Integrated PCC 10.4 SharePoint licensing.
+-  Changed permissions model to allow assigning viewer permissions to SharePoint Permission Levels.
+-  Provided customers a script to **Remove-PCCWOPIBinding**.
+-  Updated documentation to include minor updates.
+
+Upgrading from v2.0 to v2.1
+---------------------------
+
+Before installing PCC for SharePoint v2.1, complete the following steps to remove v2.0:
+
+1.  Remove the PCC for SharePoint Solution (see instructions above).
+2.  After removing the solution, remove Prizm Permission Levels: 
+    -  Go to **Site settings** > **Site permissions**.
+    -  Select **Permission Levels** on the ribbon.
+    -  Check all **Prizm ...** permission levels and select **Delete Selected Permission Levels**.
 
 Support
 =======
 
 Learn more about [Prizm Content Connect for SharePoint here](https://www.accusoft.com/products/prizm-content-connect-sharepoint/overview/).
 
-If you have questions, please visit our online [help center](https://accusofthelp.zendesk.com/hc/en-us).
+If you have questions, please visit our online [help center](https://accusofthelp.zendesk.com/hc/en-us).	
