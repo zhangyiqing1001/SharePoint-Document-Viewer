@@ -232,12 +232,14 @@ Removing the PCC for SharePoint Solution
 Using the SharePoint Interface
 ------------------------------
 
-1.  Navigate to **Central Administration \> System Settings \> Manage farm solutions** (under Farm Management)
-2.  Select **accusoft.pcc.wsp**
-3.  Select **Retract Solution** \> click **OK**
-4.  Refresh page.
-5.  When Status = **Not Deployed**, select **accusoft.pcc.wsp**
-6.  Select **Remove Solution** \> click **OK**
+1.  In Windows Services, verify "SharePoint Administration" is started.
+2.  For each site collection where the feature may be activated, navigate to **Site settings > Site collection features** and **Deactivate** the **Accusoft Prizm Content Connect for SharePoint** feature.
+3.  Navigate to **Central Administration \> System Settings \> Manage farm solutions** (under Farm Management)
+4.  Select **accusoft.pcc.wsp**
+5.  Select **Retract Solution** \> click **OK**
+6.  Refresh page.
+7.  When Status = **Not Deployed**, select **accusoft.pcc.wsp**
+8.  Select **Remove Solution** \> click **OK**
 
 **Troubleshooting Tip:** If SharePoint indicates that you don’t have permission to remove the solution, turn off UAC via registry by changing the DWORD **EnableLUA** from **1** to **0** in **HKEY\_LOCAL\_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\policies\\system**. You will get a notification that a reboot is required. After the reboot, UAC is disabled.
 
@@ -255,7 +257,17 @@ Using PowerShell
       uninstall-spsolution accusoft.pcc.wsp -webapplication \$siteurl
       remove-spsolution accusoft.pcc.wsp
       get-spwopibinding -application pcc | remove-spwopibinding -confirm:$false
- 
+
+Release Notes for v2.1.1
+======================
+
+PCC for SharePoint v2.1.1 addresses the following issue:
+
+Issues Resolved
+---------------
+
+- Viewer does not reflect the correct features for a user granted permissions via a user group nested within another user group, or potentially other Active Directory configuration scenarios. 
+
 Release Notes for v2.1
 ======================
 
@@ -297,4 +309,4 @@ Support
 
 Learn more about [Prizm Content Connect for SharePoint here](https://www.accusoft.com/products/prizm-content-connect-sharepoint/overview/).
 
-If you have questions, please visit our online [help center](https://accusofthelp.zendesk.com/hc/en-us).	
+If you have questions, please visit our online [help center](https://accusofthelp.zendesk.com/hc/en-us).	  	
