@@ -87,12 +87,15 @@ if($errorCount -eq 0)
 
 if($errorCount -eq 0)
 {   
-    WaitForJobToFinish("accusoft.pcc.wsp")
-    Write-Host
+    WaitForJobToFinish("accusoft.pcc.wsp")    
     Write-Host
     Write-Host "Enabling Feature"
-    Enable-SPFeature Accusoft.PCC -Url $WEBAPP -ErrorAction SilentlyContinue    
-    Get-SPSolution accusoft.pcc.wsp
+    Disable-SPFeature Accusoft.pcc -URL $WEBAPP -ErrorAction SilentlyContinue -Confirm:$false
+    
+    Enable-SPFeature Accusoft.PCC -Url $WEBAPP -ErrorAction SilentlyContinue -Confirm:$false
+    Write-Host
+    Write-Host
+    Get-SPSolution accusoft.pcc.wsp 
 }
 
 # Updating Security Token Service Config to authenticate users over HTTP
