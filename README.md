@@ -66,6 +66,9 @@ Server Dependencies
         **Note:** PCC for SharePoint processes requests from the PCC for SharePoint web tier only; requests from other PCC web tiers will return an error. As such, we recommend that when you install PCC, that you deselect the option to install the client samples, as they will not work.
     -   [Getting Started with ACS](http://help.accusoft.com/SAAS/pcc-for-acs/webframe.html#Getting%20Started.html)
 -   (Optional) Microsoft Office Web Apps
+-   (Optional) SSL certificate
+
+	**Note:** For help setting up your SSL certificates on IIS, please refer to the instructions from Microsoft at <https://technet.microsoft.com/en-us/library/cc732230(v=ws.10).aspx>
 
 Supported Operating Systems
 ---------------------------
@@ -120,19 +123,19 @@ PCC WOPI Client is an IIS web application. There are two prerequisites needed fo
 
 Once you have met the prerequisites above in addition to the Dependencies & Requirements, complete the steps below:
 
-1. Install the PCC WOPI Client
+1. Install PCC WOPI Client
 ------------------------------
 
 **Notes:** 
 
-   -  If you have already installed **PccWopiClient-2.1.msi**, you must uninstall it before re-installing it.
-   -  OWA and PCC WOPI Client must both be on the same port (80 or 443) (http or https) because there's only 1 WOPI zone.
+   -  Office Web Apps and PCC WOPI Client must be installed on the same port (80 or 443) (http or https).
 
 To install the PCC WOPI Client:
 
-1.  Copy **PccWopiClient-2.1.msi** to PCC WOPI Client server
-2.  Run **PccWopiClient-2.1.msi**
-3.  Enter IIS host name and service account for the PCC-WOPI IIS site
+1.  Copy **PccWopiClient.msi** to PCC WOPI Client server
+2.  Run **PccWopiClient.msi**
+3.  Select either HTTP or SSL protocol to install PCC WOPI Client. This will configure PCC WOPI Client to run on port 80 or 443 respectively.
+4.  Enter IIS host name and service account for the PCC-WOPI IIS site
 
 The install adds an entry to **Programs and Features** with the current version and build number.
 
@@ -214,12 +217,12 @@ To add custom viewer permissions and interactive-preview support for all support
 
 **Note:** The SharePoint solution must be removed before the script can be run again. See "Removing the PCC for SharePoint Solution" below.
 
-To update SharePoint WOPI bindings to PCC WOPI Client
+To update SharePoint WOPI bindings for PCC WOPI Client
 -----------------------------------------------------
 
 1.  In Windows Explorer, right-click **Update-PCCWOPIBinding.ps1** and select **Run with PowerShell**
-
-    **Note:** If connecting over https, first modify script to remove **-AllowHTTP**
+2.  Enter the host name that was specified when installing PCC WOPI Client
+3.  If PCC WOPI Client is installed using SSL, select [Y]es when prompted, otherwise, select [N]o 
 
     **Troubleshooting Tip:** If selecting PDF document link using Google Chrome does not open in PCC viewer:
 
@@ -304,9 +307,26 @@ Before installing PCC for SharePoint v2.1, complete the following steps to remov
     -  Select **Permission Levels** on the ribbon.
     -  Check all **Prizm ...** permission levels and select **Delete Selected Permission Levels**.
 
+Release Notes for v2.2
+======================
+
+PCC for SharePoint v2.2 addresses the following issues:
+
+Issues Resolved
+---------------
+
+- Prizm Viewer Permissions displays "you do not have permission to access this feature" 
+- Redact functionality available without permission being granted 
+
+Features Added
+--------------
+
+- Added SSL support to installer and PowerShell scripts 
+- Create Rendition 
+
 Support
 =======
 
 Learn more about [Prizm Content Connect for SharePoint here](https://www.accusoft.com/products/prizm-content-connect-sharepoint/overview/).
 
-If you have questions, please visit our online [help center](https://accusofthelp.zendesk.com/hc/en-us).	  	
+If you have questions, please visit our online [help center](https://accusofthelp.zendesk.com/hc/en-us).	  	  	
