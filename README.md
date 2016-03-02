@@ -81,8 +81,23 @@ System Requirements
 
 -   Minimum 4GB RAM (in addition to memory requirements of the system installed on)
 -   250MB of free disk space for product installation and logging
--   Internet Information Services (IIS)
--   Microsoft .NET Framework 4.5
+-   Internet Information Services (IIS) 7.0 or later
+-   ASP.NET 4.5
+
+ASP.NET 4.5 must be registered with IIS. This is done on Windows Server 2012, Windows Server 2012 R2, and Windows 8 in the following way:
+
+1. On the Start page, choose **Server Manager**.
+2. In the navigation pane, choose **Dashboard** and then choose **Add roles and features**.
+3. In the Add Roles and Features Wizard's **Before You Begin** page, click **Next**.
+4. On the **Select installation type** page, select **Role-based** or **feature-based** installation, then click **Next**.
+5. On the **Select destination server** page, select **Select a server from the server pool**. Select your server from Server Pool list and then click **Next**.
+6. In the **Select Server Roles** window, select **Web Server (IIS)** and then click **Next**.
+7. If the **Add features that are required for Web Server (IIS)** dialog box appears, choose **Add Features**.
+8. Expand **WCF Services** and select **HTTP Activation**.
+9. Click **Next**. Allow the Server Manager to configure itself and close the wizard when installation is complete.
+
+For all other Windows operating systems, IIS can be registered using the IIS registration tool. You can read more about the IIS registration tool here:
+<https://msdn.microsoft.com/en-us/library/k6h9cz8h.aspx>
 
 Required Permissions
 --------------------
